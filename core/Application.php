@@ -9,8 +9,10 @@ class Application
     public Router $router;
     public Request $request;
     public Response $response;
+    public Database $db;
+
     public Controller $controller;
-    public function __construct($rootPath)
+    public function __construct($rootPath, array $config)
     {
         // Tạo một lần duy nhất ROOT_DIR
         self::$ROOT_DIR = $rootPath;
@@ -18,6 +20,8 @@ class Application
         $this->request = new Request();
         $this->response = new Response();
         $this->router = new Router($this->request, $this->response);
+        $this->controller = new Controller();
+        $this->db = new Database($config['db']);
     }
 
     public function run()
