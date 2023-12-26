@@ -51,6 +51,10 @@ class Database
         ) ENGINE=INNODB;");
     }
 
+    public function prepare($sql)
+    {
+        return $this->pdo->prepare($sql);
+    }
     public function getAppliedMigrations()
     {
         $statement = $this->pdo->prepare("SELECT migration FROM migrations");
