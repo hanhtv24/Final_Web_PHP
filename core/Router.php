@@ -2,11 +2,12 @@
 
 namespace app\core;
 
+use app\core\exception\NotFoundException;
+
 class Router
 {
     public Request $request;
     public Response $response;
-
     protected array $routes = [];
 
     /**
@@ -27,21 +28,25 @@ class Router
     {
         $this->routes['post'][$path] = $callback;
     }
-
     public function resolve()
     {
         $path = $this->request->getPath();
         $method = $this->request->method();
         $callback = $this->routes[$method][$path] ?? false;
         if ($callback === false) {
-            $this->response->setStatusCode(404);
-            return $this->renderView("_404");
+            throw new NotFoundException();
         }
         if (is_array($callback)) {
-            Application::$app->controller = new $callback[0]();
-            $callback[0] = Application::$app->controller;
+            /** @var Controller $controller */
+            $controller = new $callback[0]();
+            Application::$app->controller = $controller;
+            $controller->current_action = $callback[1];
+            $callback[0] = $controller;
+            foreach ($controller->getMiddlewares() as $middleware) {
+                $middleware->execute();
+            }
         }
-        return call_user_func($callback, $this->request);
+        return call_user_func($callback, $this->request, $this->response);
     }
 
     public function renderView(string $view, $params = [])
@@ -55,10 +60,12 @@ class Router
         $layoutContent = $this->layoutContent();
         return str_replace('{{content}}', $viewContent, $layoutContent);
     }
-
     protected function layoutContent()
     {
-        $layout = Application::$app->controller->layout;
+        $layout = Application::$app->layout;
+        if (Application::$app->controller) {
+            $layout = Application::$app->controller->layout;
+        }
         // Tạo bộ đệm để return string html thay vì trả ra Browers content
         ob_start();
         include_once Application::$ROOT_DIR."/views/layouts/$layout.php";
@@ -67,6 +74,7 @@ class Router
     protected function renderOnlyView($view, $params)
     {
         foreach ($params as $key => $value) {
+            // Tạo biến với tên là giá trị của $key và giá trị là $value
             $$key = $value;
         }
         // Tạo bộ đệm để return string html thay vì trả ra Browers content
