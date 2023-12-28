@@ -4,10 +4,18 @@ namespace app\controllers;
 
 use app\core\Application;
 use app\core\Controller;
+use app\core\middlewares\AuthMiddleware;
 use app\core\Request;
+use app\core\Response;
+use app\models\ContactForm;
 
 class SiteController extends Controller
 {
+    public function __construct()
+    {
+        $this->registerMiddleware(new AuthMiddleware([]));
+    }
+
     public function home()
     {
         $params = [
@@ -15,13 +23,17 @@ class SiteController extends Controller
         ];
         return $this->render('home', $params);
     }
-    public function contact()
+    public function contact(Request $request, Response $response)
     {
-        return $this->render('contact');
-    }
-    public function handleContact(Request $request)
-    {
-        $body = $request->getBody();
-        return 'HandleContact';
+        $contactForm = new ContactForm();
+        if ($request->isPost()) {
+            $contactForm->loadData($request->getBody());
+            if ($contactForm->validate() && $contactForm->send()) {
+                Application::$app->session->setFlash('success', 'Thanks for contacting us.');
+                $response->redirect('/contact');
+                return;
+            }
+        }
+        return $this->render('contact', ['model' => $contactForm]);
     }
 }

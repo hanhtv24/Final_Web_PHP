@@ -7,7 +7,7 @@ use app\core\middlewares\BaseMiddleware;
 class Controller
 {
     public string $layout = 'main';
-
+    public string  $contentView = '';
     public string $current_action = '';
     /**
      * @var BaseMiddleware[]
@@ -17,9 +17,13 @@ class Controller
     {
         $this->layout = $layout;
     }
+    public function setContentView($content)
+    {
+        $this->contentView = $content;
+    }
     public function render($view, $params = [])
     {
-        return Application::$app->router->renderView($view, $params);
+        return Application::$app->view->renderView($view, $params);
     }
     public function registerMiddleware(BaseMiddleware $middleware)
     {

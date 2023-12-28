@@ -7,36 +7,36 @@ use app\core\Model;
 
 class LoginForm extends Model
 {
-    public string $email = '';
+    public string $login_id = '';
     public string $password = '';
 
     public function rules(): array
     {
         return [
-             'email' => [self::RULE_REQUIRED, self::RULE_EMAIL],
-             'password' => [self::RULE_REQUIRED, [self::RULE_MIN, 'min' => 8], [self::RULE_MAX, 'max' => 16]],
+             'login_id' => [self::RULE_REQUIRED, [self::RULE_MIN, 'min' => 4]],
+             'password' => [self::RULE_REQUIRED, [self::RULE_MIN, 'min' => 6], [self::RULE_MAX, 'max' => 16]],
         ];
     }
 
     public function labels() : array
     {
         return [
-            'email' => 'Email',
+            'login_id' => 'Login ID',
             'password' => 'Password'
         ];
     }
 
     public function login()
     {
-        $user = User::findOne(['email' => $this->email]);
-        if (!$user) {
-            $this->addError('email', 'User does not exist with this email');
+        $admin = Admin::findOne(['login_id' => $this->login_id]);
+        if (!$admin) {
+            $this->addError('login_id', 'Login id does not exist in system');
             return false;
         }
-        if (!password_verify($this->password, $user->password)) {
-            $this->addError('password', 'Password is incorrect');
+        if (!password_verify($this->password, $admin->password)) {
+            $this->addError('password', 'Login id and password is incorrect');
             return false;
         }
-        return Application::$app->login($user);
+        return Application::$app->login($admin);
     }
 }

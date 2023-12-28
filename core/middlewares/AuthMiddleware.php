@@ -5,10 +5,9 @@ namespace app\core\middlewares;
 use app\core\Application;
 use app\core\exception\ForbiddenException;
 
-class AuthMiddleware extends  BaseMiddleware
+class AuthMiddleware extends BaseMiddleware
 {
     public array $actions = [];
-
     /**
      * @param array $actions
      */
@@ -16,11 +15,11 @@ class AuthMiddleware extends  BaseMiddleware
     {
         $this->actions = $actions;
     }
-
     public function execute()
     {
         if (Application::isGuest()) {
-            if (empty($this->actions) || in_array(Application::$app->controller->current_action, $this->actions)) {
+            // guest can't go any areas was initialized in actions
+            if (in_array(Application::$app->controller->current_action, $this->actions)) {
                 throw new ForbiddenException();
             }
         }

@@ -1,5 +1,7 @@
 <?php
 /** @var $model app\models\LoginForm */
+/** @var \app\core\View $this */
+$this->title = 'Login';
 ?>
 
 <h1>Login</h1>

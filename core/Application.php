@@ -2,6 +2,11 @@
 
 namespace app\core;
 
+use app\core\db\Database;
+use app\core\db\DbModel;
+use app\models\AdminLoginLogs;
+use app\models\LoginForm;
+
 class Application
 {
     public static string $ROOT_DIR;
@@ -13,7 +18,9 @@ class Application
     public Database $db;
     public ?Controller $controller = null;
     public string $layout = 'main';
-    public ?DbModel $user;
+    public ?AdminModel $admin;
+    public ?string $loginTime;
+    public View $view;
     public string $userClass;
 
     public function __construct($rootPath, array $config)
@@ -26,19 +33,20 @@ class Application
         $this->session = new Session();
         $this->router = new Router($this->request, $this->response);
         $this->db = new Database($config['db']);
-
-        $primaryValue = $this->session->get('user');
+        $this->view = new View();
+        $primaryValue = $this->session->get('admin');
         if ($primaryValue) {
             $primaryKey = $this->userClass::primaryKey();
-            $this->user =  $this->userClass::findOne([$primaryKey => $primaryValue]);
+            $this->admin = $this->userClass::findOne([$primaryKey => $primaryValue]);
+            $this->loginTime = $this->session->get('loginTime');
         } else {
-            $this->user = null;
+            $this->admin = null;
         }
     }
 
     public static function isGuest()
     {
-        return !self::$app->user;
+        return !self::$app->admin;
     }
 
     public function run()
@@ -47,9 +55,10 @@ class Application
             echo $this->router->resolve();
         } catch (\Exception $e) {
             $this->response->setStatusCode($e->getCode());
-            echo $this->router->renderView('_error', [
+            echo $this->view->renderView('_error', [
                 'exception' => $e
             ]);
+//            $this->response->redirect('/login');
         }
     }
 
@@ -63,18 +72,20 @@ class Application
         $this->controller = $controller;
     }
 
-    public function login(DbModel $user)
+    public function login(AdminModel $admin)
     {
-        $this->user = $user;
-        $primaryKey = $user->primaryKey();
-        $primaryValue = $user->{$primaryKey};
-        $this->session->set('user', $primaryValue);
+        $this->admin = $admin;
+        $primaryKey = $admin->primaryKey();
+        $primaryValue = $admin->{$primaryKey};
+        $this->session->set('admin', $primaryValue);
+        $loginTime = "[".date('Y-m-d H:i')."]";
+        $this->session->set('loginTime', $loginTime);
         return true;
     }
 
     public function logout()
     {
-        $this->user = null;
-        $this->session->remove('user');
+        $this->admin = null;
+        $this->session->remove('admin');
     }
 }
