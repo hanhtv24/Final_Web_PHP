@@ -11,7 +11,7 @@ use \app\core\Application;
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-    <title>Grade-Management</title>
+    <title><?php echo $this->title ?></title>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -35,7 +35,7 @@ use \app\core\Application;
                         <a class="nav-link" href="/login">Login</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/register">Register</a>
+                        <a class="nav-link" href="/register">Register Admin</a>
                     </li>
                 </ul>
             <?php else: ?>
@@ -44,7 +44,10 @@ use \app\core\Application;
                         <a class="nav-link active" href="/profile">Profile</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="/logout">Welcome <?php echo Application::$app->user->getDisplayName() ?>
+                        <a class="nav-link active" href="/reset">Reset Password</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/logout">Welcome <?php echo Application::$app->admin->getDisplayName() ?>
                             (Logout)
                         </a>
                     </li>
