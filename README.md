@@ -1,4 +1,5 @@
 # Final_Web_PHP
+
 ## Installation
 - Dowload PHPStorm: [PHPStorm](https://www.jetbrains.com/phpstorm/download/#section=windows)
 - Dowload Xampp(7.4): [Xampp](https://download.com.vn/download/xampp-for-windows-14235?linkid=81502)
@@ -59,7 +60,7 @@ Open folder `vendor` if it has folder vlucas => OK, else REOPEN PHPSTORM
 - OPEN localhost:phpmyadmin
 - CREATE DATABASE `mvc_framwork`
 
-Step 5: Run 
+## Step 5: Run 
 - Open terminal in phpStorm:
 ```bash
 $ php -S localhost:8080
