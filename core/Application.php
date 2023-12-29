@@ -4,7 +4,7 @@ namespace app\core;
 
 use app\core\db\Database;
 use app\core\db\DbModel;
-use app\models\AdminLoginLogs;
+use app\models\Admin;
 use app\models\LoginForm;
 
 class Application
@@ -18,7 +18,7 @@ class Application
     public Database $db;
     public ?Controller $controller = null;
     public string $layout = 'main';
-    public ?AdminModel $admin;
+    public ?Admin $admin;
     public ?string $loginTime;
     public View $view;
     public string $userClass;
@@ -55,6 +55,7 @@ class Application
             echo $this->router->resolve();
         } catch (\Exception $e) {
             $this->response->setStatusCode($e->getCode());
+            $this->controller->setContentView('');
             echo $this->view->renderView('_error', [
                 'exception' => $e
             ]);
@@ -72,7 +73,7 @@ class Application
         $this->controller = $controller;
     }
 
-    public function login(AdminModel $admin)
+    public function login(Admin $admin)
     {
         $this->admin = $admin;
         $primaryKey = $admin->primaryKey();

@@ -42,4 +42,9 @@ class Request
         }
         return $body;
     }
+
+    public function getFile(string $key)
+    {
+        return $_FILES[$key] ?? null;
+    }
 }

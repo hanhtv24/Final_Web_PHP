@@ -8,6 +8,8 @@ abstract class BaseField
 {
     public Model $model;
     public string $attribute;
+    public bool $isReadOnly = false;
+    public bool $isHidden = false;
 
     /**
      * @param Model $model
@@ -17,6 +19,18 @@ abstract class BaseField
     {
         $this->model = $model;
         $this->attribute = $attribute;
+    }
+
+    public function readOnlyField(): BaseField
+    {
+        $this->isReadOnly = true;
+        return $this;
+    }
+
+    public function hiddenField(): BaseField
+    {
+        $this->isHidden = true;
+        return $this;
     }
 
     abstract public function renderInput() : string;
