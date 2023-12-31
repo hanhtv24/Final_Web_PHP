@@ -17,7 +17,7 @@ class MainController extends Controller
     public function __construct($classItemName, $classSearchName)
     {
         // Initial restricted areas
-        $this->registerMiddleware(new AuthMiddleware(['register', 'confirm', 'complete']));
+        $this->registerMiddleware(new AuthMiddleware(['register', 'confirm', 'complete', 'search']));
         $this->classItemName = $classItemName;
         $this->classSearchName = $classSearchName;
     }
@@ -29,12 +29,20 @@ class MainController extends Controller
             $item->loadData($request->getBody());
             $edit = $request->getBody()['edit'] ?? '';
             if ($edit === '') {
-                UploadHelper::uploadFile($item, 'avatar', Application::$ROOT_DIR . '/public/web/avatar', $request);
-                if ($item->validate()) {
-                    $item->avatar = basename($item->avatar);
-                    return $this->render('confirm', ['model' => $item]);
+                if (property_exists($item, 'avatar')) {
+                    UploadHelper::uploadFile($item, $item->upload_attributes(), Application::$ROOT_DIR . '/public/web/avatar', $request);
+                    if ($item->validate()) {
+                        $item->avatar = basename($item->avatar);
+                        return $this->render('confirm', ['model' => $item]);
+                    }
+                } else {
+                    if ($item->validate()) {
+                        return $this->render('confirm', ['model' => $item]);
+                    }
                 }
+
             }
+            var_dump('here');
             return $this->render('register', ['model' => $item]);
         }
         return $this->render('register', ['model' => $item]);
@@ -79,16 +87,20 @@ class MainController extends Controller
             $item->loadData($request->getBody());
             $edit = $request->getBody()['edit'] ?? '';
             if ($edit === '') {
-                if ($request->getFile('avatar')['name'] != '') {
-                    UploadHelper::uploadFile($item, 'avatar', Application::$ROOT_DIR . '/public/web/avatar', $request);
-                    $item->avatar = basename($item->avatar);
-                    if (!$item->validate()) {
-                        return $this->render('update', ['model' => $item]);
+                if (property_exists($item, 'avatar')) {
+                    if ($request->getFile('avatar')['name'] != '') {
+                        UploadHelper::uploadFile($item, 'avatar', Application::$ROOT_DIR . '/public/web/avatar', $request);
+                        $item->avatar = basename($item->avatar);
+                        if (!$item->validate()) {
+                            return $this->render('update', ['model' => $item]);
+                        }
+                        return $this->render('confirmEdit', ['model' => $item, 'id' => $request->getBody()['id']]);
                     }
+                    $item->avatar = ($request->getBody())['old_avatar'];
+                }
+                if ($item->validate()) {
                     return $this->render('confirmEdit', ['model' => $item, 'id' => $request->getBody()['id']]);
                 }
-                $item->avatar = ($request->getBody())['old_avatar'];
-                return $this->render('confirmEdit', ['model' => $item, 'id' => $request->getBody()['id']]);
             }
             return $this->render('update', ['model' => $item, 'id' => $request->getBody()['id']]);
         }

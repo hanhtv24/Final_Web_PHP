@@ -1,5 +1,5 @@
 <?php
-/** @var $model app\models\Subject */
+/** @var $model app\models\Student */
 /** @var $id string */
 /** @var View $this */
 
@@ -8,12 +8,11 @@ use app\core\form\TextareaField;
 use app\core\View;
 use \app\core\form\SelectionBoxField;
 
-$this->title = 'Update Subject';
+$this->title = 'Update Student';
 ?>
 <h3>Update Subject</h3>
 <?php $form = \app\core\form\Form::begin('', "post") ?>
 <?php echo $form->field($model, 'name')?>
-<?php echo new SelectionBoxField($model, 'school_year', $model->selectionValue()['school_year']) ?>
 <?php echo (new TextareaField($model, 'description'))?>
 <input type="hidden" name="edit" value="">
 <input type="hidden" name="id" value="<?php echo ($id != '') ? $id : $model->id ?>">

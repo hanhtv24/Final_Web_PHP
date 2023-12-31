@@ -14,14 +14,18 @@ class InputField extends BaseField
 
     public bool $hasLabel = true;
 
+    public array $select_value = [];
+
     public string $type;
     /**
      * @param Model $model
      * @param string $attribute
-     */
-    public function __construct(Model $model, string $attribute)
+     * @param array $select_value
+    */
+    public function __construct(Model $model, string $attribute, array $select_value = [])
     {
         $this->type = self::TYPE_TEXT;
+        $this->select_value = $select_value;
         parent::__construct($model, $attribute);
     }
 
@@ -54,14 +58,23 @@ class InputField extends BaseField
         if ($this->hasLabel) {
             $label = sprintf('<label class="form-label">%s</label>', $this->model->getLabel($this->attribute));
         }
-        $input = sprintf(
-            '<input type="%s" name="%s" value="%s" class="form-control %s" %s>',
-            $this->type,
-            $this->attribute,
-            $this->model->{$this->attribute},
-            $this->model->hasError($this->attribute) ? 'is-invalid' : '',
-            $this->isReadOnly ? 'readonly' : '',
-        );
+        if ($this->select_value != []) {
+            $input = sprintf(
+                '<input type="%s" value="%s" class="form-control" %s>',
+                $this->type,
+                $this->select_value[$this->attribute][$this->model->{$this->attribute}],
+                $this->isReadOnly ? 'readonly' : '',
+            );
+        } else {
+            $input = sprintf(
+                '<input type="%s" name="%s" value="%s" class="form-control %s" %s>',
+                $this->type,
+                $this->attribute,
+                $this->model->{$this->attribute},
+                $this->model->hasError($this->attribute) ? 'is-invalid' : '',
+                $this->isReadOnly ? 'readonly' : '',
+            );
+        }
         return $label . $input;
     }
 }
