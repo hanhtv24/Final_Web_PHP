@@ -3,6 +3,7 @@
 namespace app\core;
 
 use app\core\db\Database;
+use app\core\exception\TimeOutException;
 use app\models\Admin;
 
 class Application
@@ -17,7 +18,8 @@ class Application
     public ?Controller $controller = null;
     public string $layout = 'main';
     public ?Admin $admin;
-    public ?string $loginTime;
+    public ?string $loginTime = '';
+
     public View $view;
     public string $userClass;
 
@@ -32,16 +34,33 @@ class Application
         $this->router = new Router($this->request, $this->response);
         $this->db = new Database($config['db']);
         $this->view = new View();
+        $this->setAdminAndTime();
+    }
+
+    public function setAdminAndTime()
+    {
         $primaryValue = $this->session->get('admin');
         if ($primaryValue) {
             $primaryKey = $this->userClass::primaryKey();
             $this->admin = $this->userClass::findOne([$primaryKey => $primaryValue]);
-            $this->loginTime = $this->session->get('loginTime');
+            $this->loginTime = date('Y-m-d H:i:s');
+            if (!$this->checkUserActivityTimeout()) {
+                $this->session->set('lastActivityTime', time());
+            }
         } else {
             $this->admin = null;
         }
     }
 
+    public function checkUserActivityTimeout($timeoutInSeconds = 60)
+    {
+        $lastActivityTime = $this->session->get('lastActivityTime');
+        if ($lastActivityTime !== null && (time() - $lastActivityTime) > $timeoutInSeconds) {
+            return true;
+        } else {
+            return false;
+        }
+    }
     public static function isGuest()
     {
         return !self::$app->admin;
@@ -50,9 +69,14 @@ class Application
     public function run()
     {
         try {
+            if ($this->session->get('lastActivityTime') != '' && $this->checkUserActivityTimeout()) {
+                $this->logout();
+                throw new TimeOutException();
+            }
             echo $this->router->resolve();
         } catch (\Exception $e) {
             $this->response->setStatusCode($e->getCode());
+            $this->controller = new Controller();
             $this->controller->setContentView('');
             echo $this->view->renderView('_error', [
                 'exception' => $e
@@ -77,8 +101,7 @@ class Application
         $primaryKey = $admin->primaryKey();
         $primaryValue = $admin->{$primaryKey};
         $this->session->set('admin', $primaryValue);
-        $loginTime = "[".date('Y-m-d H:i')."]";
-        $this->session->set('loginTime', $loginTime);
+        $this->session->set('lastActivityTime', time());
         return true;
     }
 
@@ -86,5 +109,6 @@ class Application
     {
         $this->admin = null;
         $this->session->remove('admin');
+        $this->session->remove('lastActivityTime');
     }
 }

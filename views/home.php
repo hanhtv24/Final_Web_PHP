@@ -9,7 +9,7 @@ $this->title='Home';
     <div class="container mt-3">
     <?php if (!Application::isGuest()): ?>
     <div>Tên login: <?php echo Application::$app->admin->getDisplayName() ?></div>
-    <div>Thời gian login: <?php echo Application::$app->loginTime ?></div>
+    <div>Thời gian login: <?php echo " [".Application::$app->loginTime."]" ?></div>
     <?php else: ?>
     <div>Welcome to Grade Management</div>
     <?php endif; ?>
