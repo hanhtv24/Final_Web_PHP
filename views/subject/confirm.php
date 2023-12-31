@@ -1,5 +1,6 @@
 <?php
-/** @var $model app\models\Subject */
+/** @var app\models\Subject $model */
+/** @var string $forAction */
 /** @var View $this */
 
 use app\core\Application;
@@ -16,6 +17,7 @@ $this->title = 'Confirm Subject';
 <?php echo (new TextareaField($model, 'description'))->readOnlyField() ?>
 <?php echo $form->field($model, 'avatar')->hiddenField() ?>
 <input type="hidden" name="edit" value="">
+
 <div>
     <img src="../web/avatar/<?php echo $model->avatar?>" class="img-fluid" alt="Avatar Image" style="width: 300px; height: auto">
 </div>

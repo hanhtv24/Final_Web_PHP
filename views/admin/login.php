@@ -1,5 +1,5 @@
 <?php
-/** @var $model app\models\LoginForm */
+/** @var $model \app\models\forms\LoginForm */
 /** @var \app\core\View $this */
 $this->title = 'Login';
 ?>

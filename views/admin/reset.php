@@ -1,7 +1,8 @@
 <?php
-use app\core\Application;
-use \app\core\form\InputNoneLabelField;
-/** @var app\models\ResetForm $model  */
+
+use app\core\form\InputNoneLabelField;
+
+/** @var \app\models\forms\ResetForm $model  */
 /** @var \app\models\Admin[] $admins */
 /** @var \app\core\View $this */
 $this->title = 'Reset';

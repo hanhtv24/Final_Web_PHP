@@ -1,5 +1,5 @@
 <?php
-/** @var $model app\models\ContactForm */
+/** @var $model \app\models\forms\ContactForm */
 /** @var \app\core\View $this */
 
 use app\core\form\TextareaField;

@@ -1,5 +1,5 @@
 <?php
-/** @var $model app\models\ResetRequestForm */
+/** @var $model \app\models\forms\ResetRequestForm */
 /** @var \app\core\View $this */
 $this->title = 'Reset Request Password';
 ?>

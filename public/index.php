@@ -44,4 +44,11 @@ $app->router->post('/confirmSubject', [SubjectController::class, 'confirm']);
 $app->router->get('/searchSubject', [SubjectController::class, 'search']);
 $app->router->post('/searchSubject', [SubjectController::class, 'search']);
 
+$app->router->get('/updateSubject', [SubjectController::class, 'update']);
+$app->router->post('/updateSubject', [SubjectController::class, 'update']);
+
+$app->router->get('/confirmEditSubject', [SubjectController::class, 'confirmEdit']);
+$app->router->post('/confirmEditSubject', [SubjectController::class, 'confirmEdit']);
+$app->router->get('/deleteSubject', [SubjectController::class, 'delete']);
+
 $app->run();
