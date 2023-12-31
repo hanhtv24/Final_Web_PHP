@@ -9,7 +9,7 @@
 **NOTE**
 * USE XAMPP 7.4
 * Settings environments variables for Xampp:
-  
+
   <img src="https://github.com/QuangHC/Final_Web_PHP/assets/106605829/c91a56dc-0c0d-45d3-a943-0dec54763ba6" alt="..." width="700" />
   <img src="https://github.com/QuangHC/Final_Web_PHP/assets/106605829/d7a7bd0f-85db-4570-87d1-19b6072c28c8" alt="..." width="700" />
 ---
@@ -31,7 +31,7 @@ $ composer init
 ---
 **NOTE**
 
-Change `autoload` in: `composer.json` file: 
+Change `autoload` in: `composer.json` file:
 
 ```bash
     "autoload": {
@@ -55,7 +55,7 @@ Open folder `vendor` if it has folder vlucas => OK, else REOPEN PHPSTORM
 
 ---
 
-## Step 4: Start xampp and create DB
+## Step 4: Start xampp and create DB 
 - START XAMPP
 - OPEN `http://localhost/phpmyadmin/index.php`
 - CREATE DATABASE `mvc_framwork`
@@ -63,9 +63,15 @@ Open folder `vendor` if it has folder vlucas => OK, else REOPEN PHPSTORM
    CREATE DATABASE mvc_framwork
 ```
 
-## Step 5: Run 
+## Step 5: Add migrations
+```bash
+$ php migrations.php   
+```
+
+## Step 6: Run
 - Open terminal in phpStorm:
 ```bash
+$ cd .\public\    
 $ php -S localhost:8080
 ```
 
