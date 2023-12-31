@@ -22,11 +22,6 @@ class InputNoneLabelField extends BaseField
         $this->type = self::TYPE_TEXT;
         parent::__construct($model, $attribute);
     }
-    public function hiddenField(): InputNoneLabelField
-    {
-        $this->type = self::TYPE_HIDDEN;
-        return $this;
-    }
     public function renderInput(): string
     {
         return sprintf('<input type="%s" name="%s" value="%s" class="form-control %s">',

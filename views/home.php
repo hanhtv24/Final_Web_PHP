@@ -37,8 +37,8 @@ $this->title='Home';
                     Môn học
                 </div>
                 <div class="list-group">
-                    <a href="/" class="list-group-item list-group-item-action">Tìm kiếm</a>
-                    <a href="/" class="list-group-item list-group-item-action">Thêm mới</a>
+                    <a href="/searchSubject" class="list-group-item list-group-item-action">Tìm kiếm</a>
+                    <a href="/registerSubject" class="list-group-item list-group-item-action">Thêm mới</a>
                 </div>
             </div>
             <div class="col-sm-2 m-2">
@@ -49,7 +49,8 @@ $this->title='Home';
                     <a href="/" class="list-group-item list-group-item-action">Tìm kiếm</a>
                     <a href="/" class="list-group-item list-group-item-action">Thêm mới</a>
                 </div>
-            </div><div class="col-sm-2 m-2">
+            </div>
+            <div class="col-sm-2 m-2">
                 <div class="">
                     Điểm
                 </div>

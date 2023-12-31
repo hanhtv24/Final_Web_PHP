@@ -6,12 +6,14 @@ use app\core\Model;
 
 class Form
 {
-    public static function begin($action, $method)
+    public static function begin($action, $method, string $id = '')
     {
-        echo sprintf('<form action="%s" method="%s">', $action, $method);
+        if ($id === '') {
+            echo sprintf('<form action="%s" enctype="multipart/form-data" method="%s">', $action, $method);
+        }
+        echo sprintf('<form action="%s" id = "%s" enctype="multipart/form-data" method="%s">', $action, $id, $method);
         return new Form();
     }
-
     public static function end()
     {
         echo '</form>';

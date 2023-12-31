@@ -8,11 +8,9 @@ use app\core\middlewares\AuthMiddleware;
 use app\core\Request;
 use app\core\Response;
 use app\models\Admin;
-use app\models\AdminLoginLogs;
-use app\models\LoginForm;
-use app\models\ResetForm;
-use app\models\ResetRequestForm;
-use app\models\User;
+use app\models\forms\LoginForm;
+use app\models\forms\ResetForm;
+use app\models\forms\ResetRequestForm;
 
 
 class AuthController extends Controller
@@ -49,6 +47,7 @@ class AuthController extends Controller
         if ($request->isPost()) {
             $loginForm->loadData($request->getBody());
             if ($loginForm->validate() && $loginForm->login()) {
+                Application::$app->session->setFlash('success', 'LOGIN SUCCESSFUL');
                 $response->redirect('/');
                 return;
             }

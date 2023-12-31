@@ -2,7 +2,7 @@
 use app\controllers\SiteController;
 use app\core\Application;
 use app\controllers\AuthController;
-use app\controllers\AdminController;
+use app\controllers\SubjectController;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 $dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__));
@@ -35,5 +35,20 @@ $app->router->get('/reset', [AuthController::class, 'reset']);
 $app->router->post('/reset', [AuthController::class, 'reset']);
 
 
+$app->router->get('/registerSubject', [SubjectController::class, 'register']);
+$app->router->post('/registerSubject', [SubjectController::class, 'register']);
+
+$app->router->get('/confirmSubject', [SubjectController::class, 'confirm']);
+$app->router->post('/confirmSubject', [SubjectController::class, 'confirm']);
+
+$app->router->get('/searchSubject', [SubjectController::class, 'search']);
+$app->router->post('/searchSubject', [SubjectController::class, 'search']);
+
+$app->router->get('/updateSubject', [SubjectController::class, 'update']);
+$app->router->post('/updateSubject', [SubjectController::class, 'update']);
+
+$app->router->get('/confirmEditSubject', [SubjectController::class, 'confirmEdit']);
+$app->router->post('/confirmEditSubject', [SubjectController::class, 'confirmEdit']);
+$app->router->get('/deleteSubject', [SubjectController::class, 'delete']);
 
 $app->run();

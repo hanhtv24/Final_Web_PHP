@@ -4,17 +4,22 @@ namespace app\core\db;
 
 use app\core\Application;
 use app\core\Model;
+use app\models\Subject;
 use PDO;
 
 abstract class DbModel extends Model
 {
     // Table want to be saved
     abstract public function tableName(): string;
-
     // List attribute save to Db
     abstract public function attributes() : array;
 
     abstract public function primaryKey() : string;
+
+    public function getClassSearch()
+    {
+        return static::class;
+    }
 
     public function save()
     {
@@ -81,5 +86,32 @@ abstract class DbModel extends Model
         }
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_CLASS , static::class);
+    }
+
+    public function search($searchKey, $searchValue)
+    {
+        $tableName = static::tableName();
+        $attributes = array_keys($searchKey);
+        $equalWhere = $searchKey[$attributes[0]]." = '".$searchValue[$attributes[0]]."'";
+        $sql = "SELECT * FROM $tableName WHERE $equalWhere";
+        if ($searchValue[$attributes[1]] != '') {
+            $likeWhere = $searchKey[$attributes[1]][0]." LIKE '%".$searchValue[$attributes[1]]."%' OR ".$searchKey[$attributes[1]][1]." LIKE '%".$searchValue[$attributes[1]]."%'";
+            $sql = $sql." AND (".$likeWhere.")";
+        }
+        $statement = self::prepare($sql);
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_CLASS , static::getClassSearch());
+    }
+
+    public function delete($where)
+    {
+        $tableName = static::tableName();
+        $attributes = array_keys($where);
+        $sql = implode('AND ', array_map(fn($attr) => "$attr = :$attr", $attributes));
+        $statement = self::prepare("DELETE FROM $tableName WHERE $sql");
+        foreach ($where as $key => $item) {
+            $statement->bindValue(":$key", $item);
+        }
+        $statement->execute();
     }
 }

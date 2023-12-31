@@ -1,9 +1,9 @@
 <?php
 
-namespace app\models;
+namespace app\models\forms;
 
-use app\core\Application;
 use app\core\Model;
+use app\models\Admin;
 
 class ResetForm extends Model
 {
