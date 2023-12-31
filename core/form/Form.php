@@ -19,8 +19,10 @@ class Form
         echo '</form>';
     }
 
-    public function field(Model $model, $attribute)
+    public function field(Model $model, $attribute, $select_value = [])
     {
-        return new InputField($model, $attribute);
+        return new InputField($model, $attribute, $select_value);
     }
+
+
 }

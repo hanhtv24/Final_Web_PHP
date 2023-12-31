@@ -28,8 +28,8 @@ $this->title='Home';
                     Giáo viên
                 </div>
                 <div class="list-group">
-                    <a href="/" class="list-group-item list-group-item-action">Tìm kiếm</a>
-                    <a href="/" class="list-group-item list-group-item-action">Thêm mới</a>
+                    <a href="/searchTeacher" class="list-group-item list-group-item-action">Tìm kiếm</a>
+                    <a href="/registerTeacher" class="list-group-item list-group-item-action">Thêm mới</a>
                 </div>
             </div>
             <div class="col-sm-2 m-2">
@@ -46,8 +46,8 @@ $this->title='Home';
                     Sinh viên
                 </div>
                 <div class="list-group">
-                    <a href="/" class="list-group-item list-group-item-action">Tìm kiếm</a>
-                    <a href="/" class="list-group-item list-group-item-action">Thêm mới</a>
+                    <a href="/searchStudent" class="list-group-item list-group-item-action">Tìm kiếm</a>
+                    <a href="/registerStudent" class="list-group-item list-group-item-action">Thêm mới</a>
                 </div>
             </div>
             <div class="col-sm-2 m-2">
@@ -55,8 +55,8 @@ $this->title='Home';
                     Điểm
                 </div>
                 <div class="list-group">
-                    <a href="/" class="list-group-item list-group-item-action">Tìm kiếm</a>
-                    <a href="/" class="list-group-item list-group-item-action">Thêm mới</a>
+                    <a href="/searchScore" class="list-group-item list-group-item-action">Tìm kiếm</a>
+                    <a href="/registerScore" class="list-group-item list-group-item-action">Thêm mới</a>
                 </div>
             </div>
         </div>

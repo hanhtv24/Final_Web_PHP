@@ -25,11 +25,12 @@ class SelectionBoxField extends BaseField
         if ($this->model->{$this->attribute} === '') {
             $optionStr = '<option selected></option>';
         }
+
         foreach ($this->options as $index => $value) {
-            if ($this->model->{$this->attribute} == $value) {
-                $optionStr .= sprintf('<option value="%s" selected>%s</option>', $value, $value);
+            if ($this->model->{$this->attribute} === (string)$index) {
+                $optionStr .= sprintf('<option value="%s" selected>%s</option>', $index, $value);
             } else {
-                $optionStr .= sprintf('<option value="%s">%s</option>', $value, $value);
+                $optionStr .= sprintf('<option value="%s">%s</option>', $index, $value);
             }
         }
 

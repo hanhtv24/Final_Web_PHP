@@ -1,5 +1,5 @@
 <?php
-/** @var app\models\Subject $model */
+/** @var app\models\Student $model */
 /** @var string $id */
 /** @var View $this */
 
@@ -7,14 +7,12 @@ use app\core\Application;
 use app\core\form\TextareaField;
 use app\core\View;
 
-$this->title = 'Confirm Edit Subject';
+$this->title = 'Confirm Edit Student';
 ?>
 
 <h3>Confirm Edit Subject</h3>
-<?php $form = \app\core\form\Form::begin('/confirmEditSubject', "post", 'subjectForm') ?>
+<?php $form = \app\core\form\Form::begin('/confirmEditStudent', "post", 'Form') ?>
 <?php echo $form->field($model, 'name')->readOnlyField() ?>
-<?php echo $form->field($model, 'school_year')->hiddenField()->noneLabelField() ?>
-<?php echo $form->field($model, 'school_year', $model->selectionValue())->readOnlyField() ?>
 <?php echo (new TextareaField($model, 'description'))->readOnlyField() ?>
 <?php echo $form->field($model, 'avatar')->hiddenField() ?>
 <input type="hidden" name="edit" value="">
@@ -32,8 +30,8 @@ $this->title = 'Confirm Edit Subject';
 <script>
     $('#edit').click(function() {
         // Thay đổi action của form
-        $('#subjectForm').attr('action', '/updateSubject');
+        $('#Form').attr('action', '/updateStudent');
         $('input[name="edit"]').val('true');
-        $('#subjectForm').submit();
+        $('#Form').submit();
     });
 </script>

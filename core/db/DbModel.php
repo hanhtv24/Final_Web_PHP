@@ -75,14 +75,18 @@ abstract class DbModel extends Model
         return $statement->fetchObject(static::class);
     }
 
-    public function findAll(array $where, string $method = '=')
+    public function findAll(array $where = [], string $method = '=', array $columns = ['*'])
     {
         $tableName = static::tableName();
         $attributes = array_keys($where);
+        $columnSQL = implode(', ', $columns);
         $sql = implode('AND ', array_map(fn($attr) => "$attr $method :$attr", $attributes));
-        $statement = self::prepare("SELECT * FROM $tableName WHERE $sql");
+        $statement = self::prepare("SELECT $columnSQL FROM $tableName WHERE $sql");
         foreach ($where as $key => $item) {
             $statement->bindValue(":$key", $item);
+        }
+        if ($where === []) {
+            $statement = self::prepare("SELECT $columnSQL FROM $tableName");
         }
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_CLASS , static::class);
@@ -91,16 +95,48 @@ abstract class DbModel extends Model
     public function search($searchKey, $searchValue)
     {
         $tableName = static::tableName();
-        $attributes = array_keys($searchKey);
-        $equalWhere = $searchKey[$attributes[0]]." = '".$searchValue[$attributes[0]]."'";
-        $sql = "SELECT * FROM $tableName WHERE $equalWhere";
-        if ($searchValue[$attributes[1]] != '') {
-            $likeWhere = $searchKey[$attributes[1]][0]." LIKE '%".$searchValue[$attributes[1]]."%' OR ".$searchKey[$attributes[1]][1]." LIKE '%".$searchValue[$attributes[1]]."%'";
-            $sql = $sql." AND (".$likeWhere.")";
+        $sql = "SELECT * FROM $tableName WHERE ";
+
+        $params = [];
+        foreach ($searchKey as $attribute => $column) {
+            if ($searchValue[$attribute] !== '' && !is_array($searchValue[$attribute])) {
+                if (is_array($column)) {
+                    $likeConditions = [];
+                    foreach ($column as $col) {
+                        $likeConditions[] = "$col LIKE :$attribute";
+                    }
+                    $sql .= '(' . implode(' OR ', $likeConditions) . ') AND ';
+                    $params[":$attribute"] = "%$searchValue[$attribute]%";
+
+                } else {
+                    $sql .= "$column = :$attribute AND ";
+                    $params[":$attribute"] = $searchValue[$attribute];
+                }
+            } elseif ($searchValue[$attribute] !== '') {
+                if (is_array($column)) {
+                    $likeConditions = [];
+                    foreach ($column as $col) {
+                        $likeConditions[] = "$col LIKE :$col";
+                        $val = ($searchValue[$attribute][$col]);
+                        $params[":$col"] = "%$val%";
+                    }
+                    $sql .= '(' . implode(' AND ', $likeConditions) . ') AND ';
+
+                } else {
+                    $sql .= "$column = :$attribute AND ";
+                    $params[":$attribute"] = $searchValue[$attribute];
+                }
+            }
         }
+        // Remove the trailing 'AND ' from the query
+        $sql = rtrim($sql, ' AND ');
+        if (!$params) {
+            $sql = "SELECT * FROM $tableName";
+        }
+
         $statement = self::prepare($sql);
-        $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_CLASS , static::getClassSearch());
+        $statement->execute($params);
+        return $statement->fetchAll(PDO::FETCH_CLASS, static::getClassSearch());
     }
 
     public function delete($where)

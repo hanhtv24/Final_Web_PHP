@@ -6,8 +6,8 @@ use app\core\db\DbModel;
 
 abstract class SearchForm extends DbModel
 {
-    public string $search_key = '';
-    public array $keyword = [];
+    public string $search_key = ''; // Search for "AND" condition
+    public array $keyword = [];  // Search for "LIKE" condition
 
     public function getNameSearchKey() : array
     {

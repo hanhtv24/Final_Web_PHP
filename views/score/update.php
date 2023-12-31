@@ -1,5 +1,5 @@
 <?php
-/** @var $model app\models\Subject */
+/** @var $model app\models\Score */
 /** @var $id string */
 /** @var View $this */
 
@@ -8,21 +8,17 @@ use app\core\form\TextareaField;
 use app\core\View;
 use \app\core\form\SelectionBoxField;
 
-$this->title = 'Update Subject';
+$this->title = 'Update Score';
 ?>
-<h3>Update Subject</h3>
+<h3>Update Score</h3>
 <?php $form = \app\core\form\Form::begin('', "post") ?>
-<?php echo $form->field($model, 'name')?>
-<?php echo new SelectionBoxField($model, 'school_year', $model->selectionValue()['school_year']) ?>
+<?php echo new SelectionBoxField($model, 'student_id', $model->selectionValue()['student_id']) ?>
+<?php echo new SelectionBoxField($model, 'subject_id', $model->selectionValue()['subject_id']) ?>
+<?php echo new SelectionBoxField($model, 'teacher_id', $model->selectionValue()['teacher_id']) ?>
+<?php echo new SelectionBoxField($model, 'score', $model->selectionValue()['score']) ?>
 <?php echo (new TextareaField($model, 'description'))?>
 <input type="hidden" name="edit" value="">
 <input type="hidden" name="id" value="<?php echo ($id != '') ? $id : $model->id ?>">
-<input type="hidden" name="old_avatar" value="<?php echo $model->avatar ?>">
-
-<div>
-    <img src="../web/avatar/<?php echo $model->avatar?>" class="img-fluid" alt="Avatar Image" style="width: 300px; height: auto">
-</div>
-<?php echo $form->field($model, 'avatar')->fileField() ?>
 
 <div class="mt-3">
     <button type="submit" class="btn btn-success">Xác nhận</button>

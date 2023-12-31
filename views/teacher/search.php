@@ -1,28 +1,28 @@
 <?php
-/** @var \app\models\forms\SearchFormSubject $model  */
-/** @var app\models\Subject[] $items  */
+/** @var \app\models\forms\SearchFormTeacher $model  */
+/** @var app\models\Teacher[] $items  */
 /** @var View $this */
 
 use app\core\form\SelectionBoxField;
 use app\core\View;
 
-$this->title = 'SEARCH SUBJECTS';
+$this->title = 'SEARCH TEACHERS';
 ?>
-<h3>Search Subject</h3>
+<h3>Search Teachers</h3>
 <?php $form = \app\core\form\Form::begin('', "post","searchForm") ?>
-<?php echo new SelectionBoxField($model, 'search_value', \app\models\Subject::selectionValue()['school_year']) ?>
+<?php echo new SelectionBoxField($model, 'search_value', \app\models\Teacher::selectionValue()['specialized']) ?>
 <?php echo $form->field($model, 'keyword_value') ?>
 <input id="delete_id" name="delete_id" type="text" class="d-none">
     <button type="submit" class="btn btn-primary">Tìm kiếm</button>
 <?php \app\core\form\Form::end() ?>
 
-<h5 class="mt-2">Số môn học tìm thấy: <?php echo count($items) ?></h5>
+<h5 class="mt-2">Số giáo viên tìm thấy: <?php echo count($items) ?></h5>
 <table class="table mt-2">
     <thead>
     <tr>
         <th scope="col">NO</th>
-        <th scope="col">Tên môn học</th>
-        <th scope="col">Khóa học</th>
+        <th scope="col">Tên giáo viên</th>
+        <th scope="col">Khoa</th>
         <th scope="col">Mô tả chi tiết</th>
         <th scope="col" colspan="2">Action</th>
     </tr>
@@ -33,11 +33,11 @@ $this->title = 'SEARCH SUBJECTS';
             <th scope="row"><?php echo $index + 1?></th>
             <td class='d-none'><?php echo $item->id ?></td>
             <td><?php echo $item->name ?></td>
-            <td><?php echo \app\models\Subject::selectionValue()['school_year'][$item->school_year] ?></td>
+            <td><?php echo \app\models\Teacher::selectionValue()['specialized'][$item->specialized] ?></td>
             <td><?php echo $item->description ?></td>
             <td class='text-end'><button class='btn btn-danger delete_btn'>Xóa</button></td>
             <td>
-                <a href="/updateSubject?id=<?php echo $item->id ?>" class='btn btn-info display_edit'>Sửa</a>
+                <a href="/updateTeacher?id=<?php echo $item->id ?>" class='btn btn-info display_edit'>Sửa</a>
             </td>
         </tr>
     <?php endforeach; ?>
@@ -51,11 +51,11 @@ $this->title = 'SEARCH SUBJECTS';
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Xóa phòng học</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Xóa giáo viên</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                Bạn muốn xóa phòng học này?
+                Bạn muốn xóa giáo viên này?
             </div>
             <div class="modal-footer">
                 <button type="button" id="delete_item" class="btn btn-secondary" data-bs-dismiss="modal">Xóa</button>

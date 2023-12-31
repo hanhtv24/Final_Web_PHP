@@ -1,5 +1,9 @@
 <?php
+
+use app\controllers\ScoreController;
 use app\controllers\SiteController;
+use app\controllers\StudentController;
+use app\controllers\TeacherController;
 use app\core\Application;
 use app\controllers\AuthController;
 use app\controllers\SubjectController;
@@ -50,5 +54,54 @@ $app->router->post('/updateSubject', [SubjectController::class, 'update']);
 $app->router->get('/confirmEditSubject', [SubjectController::class, 'confirmEdit']);
 $app->router->post('/confirmEditSubject', [SubjectController::class, 'confirmEdit']);
 $app->router->get('/deleteSubject', [SubjectController::class, 'delete']);
+
+
+$app->router->get('/registerStudent', [StudentController::class, 'register']);
+$app->router->post('/registerStudent', [StudentController::class, 'register']);
+
+$app->router->get('/confirmStudent', [StudentController::class, 'confirm']);
+$app->router->post('/confirmStudent', [StudentController::class, 'confirm']);
+
+$app->router->get('/searchStudent', [StudentController::class, 'search']);
+$app->router->post('/searchStudent', [StudentController::class, 'search']);
+
+$app->router->get('/updateStudent', [StudentController::class, 'update']);
+$app->router->post('/updateStudent', [StudentController::class, 'update']);
+
+$app->router->get('/confirmEditStudent', [StudentController::class, 'confirmEdit']);
+$app->router->post('/confirmEditStudent', [StudentController::class, 'confirmEdit']);
+$app->router->get('/deleteStudent', [StudentController::class, 'delete']);
+
+$app->router->get('/registerTeacher', [TeacherController::class, 'register']);
+$app->router->post('/registerTeacher', [TeacherController::class, 'register']);
+
+$app->router->get('/confirmTeacher', [TeacherController::class, 'confirm']);
+$app->router->post('/confirmTeacher', [TeacherController::class, 'confirm']);
+
+$app->router->get('/searchTeacher', [TeacherController::class, 'search']);
+$app->router->post('/searchTeacher', [TeacherController::class, 'search']);
+
+$app->router->get('/updateTeacher', [TeacherController::class, 'update']);
+$app->router->post('/updateTeacher', [TeacherController::class, 'update']);
+
+$app->router->get('/confirmEditTeacher', [TeacherController::class, 'confirmEdit']);
+$app->router->post('/confirmEditTeacher', [TeacherController::class, 'confirmEdit']);
+$app->router->get('/deleteTeacher', [TeacherController::class, 'delete']);
+
+$app->router->get('/registerScore', [ScoreController::class, 'register']);
+$app->router->post('/registerScore', [ScoreController::class, 'register']);
+
+$app->router->get('/confirmScore', [ScoreController::class, 'confirm']);
+$app->router->post('/confirmScore', [ScoreController::class, 'confirm']);
+
+$app->router->get('/searchScore', [ScoreController::class, 'search']);
+$app->router->post('/searchScore', [ScoreController::class, 'search']);
+
+$app->router->get('/updateScore', [ScoreController::class, 'update']);
+$app->router->post('/updateScore', [ScoreController::class, 'update']);
+
+$app->router->get('/confirmEditScore', [ScoreController::class, 'confirmEdit']);
+$app->router->post('/confirmEditScore', [ScoreController::class, 'confirmEdit']);
+$app->router->get('/deleteScore', [ScoreController::class, 'delete']);
 
 $app->run();
