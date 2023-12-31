@@ -52,7 +52,7 @@ class Application
         }
     }
 
-    public function checkUserActivityTimeout($timeoutInSeconds = 60)
+    public function checkUserActivityTimeout($timeoutInSeconds = 30)
     {
         $lastActivityTime = $this->session->get('lastActivityTime');
         if ($lastActivityTime !== null && (time() - $lastActivityTime) > $timeoutInSeconds) {
@@ -61,6 +61,7 @@ class Application
             return false;
         }
     }
+
     public static function isGuest()
     {
         return !self::$app->admin;
