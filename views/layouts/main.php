@@ -32,7 +32,13 @@ use \app\core\Application;
             <?php if (Application::isGuest()): ?>
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" href="/login">Login</a>
+                        <a class="nav-link" href="/loginUser">Login User</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/loginAdmin">Login Admin</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/registerUser">Register User</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/register">Register Admin</a>

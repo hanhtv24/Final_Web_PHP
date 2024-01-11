@@ -13,7 +13,7 @@ class SiteController extends Controller
 {
     public function __construct()
     {
-        $this->registerMiddleware(new AuthMiddleware([]));
+        $this->registerMiddleware(new AuthMiddleware(['contact']));
     }
 
     public function home()

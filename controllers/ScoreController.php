@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\core\middlewares\AuthMiddleware;
 use app\models\forms\SearchFormScore;
 use app\models\forms\SearchFormStudent;
 use app\models\forms\SearchFormTeacher;
@@ -15,6 +16,8 @@ class ScoreController extends MainController
     {
         // Initial restricted areas
         parent::__construct(Score::class, SearchFormScore::class);
+        $this->registerMiddleware(new AuthMiddleware(['register', 'confirm', 'complete', 'search', '/registerScore']));
+
         $this->setContentView('score');
     }
 }

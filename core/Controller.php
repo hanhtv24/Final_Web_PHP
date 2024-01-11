@@ -13,6 +13,7 @@ class Controller
      * @var BaseMiddleware[]
      */
     protected array $middlewares = [];
+
     public function setLayout($layout)
     {
         $this->layout = $layout;

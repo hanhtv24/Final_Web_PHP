@@ -17,7 +17,7 @@ class Application
     public Database $db;
     public ?Controller $controller = null;
     public string $layout = 'main';
-    public ?Admin $admin;
+    public $admin;
     public ?string $loginTime = '';
 
     public View $view;
@@ -52,7 +52,7 @@ class Application
         }
     }
 
-    public function checkUserActivityTimeout($timeoutInSeconds = 30)
+    public function checkUserActivityTimeout($timeoutInSeconds = 1000) // 1000s time out
     {
         $lastActivityTime = $this->session->get('lastActivityTime');
         if ($lastActivityTime !== null && (time() - $lastActivityTime) > $timeoutInSeconds) {
@@ -96,7 +96,7 @@ class Application
         $this->controller = $controller;
     }
 
-    public function login(Admin $admin)
+    public function login($admin)
     {
         $this->admin = $admin;
         $primaryKey = $admin->primaryKey();

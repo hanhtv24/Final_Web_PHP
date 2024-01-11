@@ -13,7 +13,7 @@ $dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__));
 $dotenv->load();
 
 $config = [
-    'userClass' => \app\models\Admin::class,
+    'userClass' => \app\models\User::class,
     'db' => [
         'dsn' => $_ENV['DB_DSN'],
         'user' => $_ENV['DB_USER'],
@@ -27,8 +27,8 @@ $app->router->get('/', [SiteController::class, 'home']);
 $app->router->get('/contact', [SiteController::class, 'contact']);
 $app->router->post('/contact', [SiteController::class, 'contact']);
 
-$app->router->get('/login', [AuthController::class, 'login']);
-$app->router->post('/login', [AuthController::class, 'login']);
+$app->router->get('/loginAdmin', [AuthController::class, 'login']);
+$app->router->post('/loginAdmin', [AuthController::class, 'login']);
 $app->router->get('/register', [AuthController::class, 'register']);
 $app->router->post('/register', [AuthController::class, 'register']);
 $app->router->get('/logout', [AuthController::class, 'logout']);
@@ -37,6 +37,11 @@ $app->router->get('/resetRequest', [AuthController::class, 'resetRequest']);
 $app->router->post('/resetRequest', [AuthController::class, 'resetRequest']);
 $app->router->get('/reset', [AuthController::class, 'reset']);
 $app->router->post('/reset', [AuthController::class, 'reset']);
+
+$app->router->get('/registerUser', [\app\controllers\UserController::class, 'register']);
+$app->router->post('/registerUser', [\app\controllers\UserController::class, 'register']);
+$app->router->get('/loginUser', [\app\controllers\UserController::class, 'login']);
+$app->router->post('/loginUser', [\app\controllers\UserController::class, 'login']);
 
 
 $app->router->get('/registerSubject', [SubjectController::class, 'register']);
