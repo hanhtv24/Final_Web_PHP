@@ -63,12 +63,22 @@ Open folder `vendor` if it has folder vlucas => OK, else REOPEN PHPSTORM
    CREATE DATABASE mvc_framwork
 ```
 
-## Step 5: Add migrations
+## Step 5: Add file `.env` 
+---
+**Content file `.env` in folder `Final_Web_PHP`**
+
+DB_DSN = mysql:host=localhost;port=3306;dbname=mvc_framework<br>
+DB_USER = root<br>
+DB_PASSWORD =
+
+---
+
+## Step 6: Run
+- Run migrations
 ```bash
 $ php migrations.php   
 ```
 
-## Step 6: Run
 - Open terminal in phpStorm:
 ```bash
 $ cd .\public\    
