@@ -9,14 +9,17 @@ use app\models\Admin;
 class Application
 {
     public static string $ROOT_DIR;
+
     public static Application $app;
     public Router $router;
     public Request $request;
     public Response $response;
     public Session $session;
+
     public Database $db;
     public ?Controller $controller = null;
     public string $layout = 'main';
+
     public ?Admin $admin;
     public ?string $loginTime = '';
 
@@ -52,7 +55,7 @@ class Application
         }
     }
 
-    public function checkUserActivityTimeout($timeoutInSeconds = 60)
+    public function checkUserActivityTimeout($timeoutInSeconds = 10000)
     {
         $lastActivityTime = $this->session->get('lastActivityTime');
         if ($lastActivityTime !== null && (time() - $lastActivityTime) > $timeoutInSeconds) {

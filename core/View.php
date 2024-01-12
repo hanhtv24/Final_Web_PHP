@@ -11,6 +11,7 @@ class View
         $layoutContent = $this->layoutContent();
         return str_replace('{{content}}', $viewContent, $layoutContent);
     }
+
     public function renderContent(string $viewContent)
     {
         $layoutContent = $this->layoutContent();

@@ -16,6 +16,7 @@ $config = [
         'password' => $_ENV['DB_PASSWORD'],
     ]
 ];
+
 $app = new Application(__DIR__, $config);
 
 $app->db->applyMigrations();

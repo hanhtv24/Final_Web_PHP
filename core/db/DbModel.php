@@ -116,9 +116,11 @@ abstract class DbModel extends Model
                 if (is_array($column)) {
                     $likeConditions = [];
                     foreach ($column as $col) {
-                        $likeConditions[] = "$col LIKE :$col";
                         $val = ($searchValue[$attribute][$col]);
-                        $params[":$col"] = "%$val%";
+                        if ($val != '') {
+                            $likeConditions[] = "$col LIKE :$col";
+                            $params[":$col"] = "%$val%";
+                        }
                     }
                     $sql .= '(' . implode(' AND ', $likeConditions) . ') AND ';
 

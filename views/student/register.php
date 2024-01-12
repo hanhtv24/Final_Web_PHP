@@ -1,12 +1,12 @@
 <?php ?>
 <?php
-/** @var $model app\models\Student */
+/** @var app\models\Student $model */
 /** @var View $this */
 
 use app\core\form\TextareaField;
 use app\core\View;
 use \app\core\form\SelectionBoxField;
-
+var_dump($model);
 $this->title = 'Register Student';
 ?>
 <h3>Create new Student</h3>
@@ -16,3 +16,4 @@ $this->title = 'Register Student';
 <?php echo $form->field($model, 'avatar')->fileField() ?>
     <button type="submit" class="btn btn-primary">Xác nhận</button>
 <?php \app\core\form\Form::end() ?>
+

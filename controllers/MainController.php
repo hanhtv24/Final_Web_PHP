@@ -28,6 +28,7 @@ class MainController extends Controller
         if ($request->isPost()) {
             $item->loadData($request->getBody());
             $edit = $request->getBody()['edit'] ?? '';
+            var_dump($edit);
             if ($edit === '') {
                 if (property_exists($item, 'avatar')) {
                     UploadHelper::uploadFile($item, $item->upload_attributes(), Application::$ROOT_DIR . '/public/web/avatar', $request);
@@ -42,7 +43,6 @@ class MainController extends Controller
                 }
 
             }
-            var_dump('here');
             return $this->render('register', ['model' => $item]);
         }
         return $this->render('register', ['model' => $item]);
@@ -117,7 +117,7 @@ class MainController extends Controller
             if ($edit === '') {
                 if ($item->validate() && $item->update($item->attributes(), ['id' => $request->getBody()['id']]))
                 {
-                    return $this->render('complete', ['model' => $item]);
+                    return $this->render('complete', ['model' => $item, 'method' => 'edit']);
                 }
             }
             $response->redirect('/search');
