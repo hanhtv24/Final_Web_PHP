@@ -107,7 +107,6 @@ abstract class DbModel extends Model
                     }
                     $sql .= '(' . implode(' OR ', $likeConditions) . ') AND ';
                     $params[":$attribute"] = "%$searchValue[$attribute]%";
-
                 } else {
                     $sql .= "$column = :$attribute AND ";
                     $params[":$attribute"] = $searchValue[$attribute];
@@ -116,12 +115,13 @@ abstract class DbModel extends Model
                 if (is_array($column)) {
                     $likeConditions = [];
                     foreach ($column as $col) {
-                        $likeConditions[] = "$col LIKE :$col";
                         $val = ($searchValue[$attribute][$col]);
-                        $params[":$col"] = "%$val%";
+                        if ($val != '') {
+                            $likeConditions[] = "$col LIKE :$col";
+                            $params[":$col"] = "%$val%";
+                        }
                     }
                     $sql .= '(' . implode(' AND ', $likeConditions) . ') AND ';
-
                 } else {
                     $sql .= "$column = :$attribute AND ";
                     $params[":$attribute"] = $searchValue[$attribute];
@@ -133,7 +133,6 @@ abstract class DbModel extends Model
         if (!$params) {
             $sql = "SELECT * FROM $tableName";
         }
-
         $statement = self::prepare($sql);
         $statement->execute($params);
         return $statement->fetchAll(PDO::FETCH_CLASS, static::getClassSearch());

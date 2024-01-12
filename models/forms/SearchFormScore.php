@@ -5,14 +5,11 @@ namespace app\models\forms;
 use app\core\db\DbModel;
 use app\models\Score;
 
-class SearchFormScore extends DbModel
+class SearchFormScore extends SearchForm
 {
     public string $student_id = '';
     public string $subject_id = '';
     public string $teacher_id = '';
-
-    public string $search_key = '';
-    public array $keyword = [];
 
     public function __construct()
     {
@@ -56,13 +53,5 @@ class SearchFormScore extends DbModel
     public function getClassSearch()
     {
         return Score::class;
-    }
-    public function search($searchKey, $searchValue)
-    {
-        return parent::search($searchKey, $searchValue);
-    }
-    public function getNameSearchKey() : array
-    {
-        return ['search_key' => $this->search_key, 'key_word' => $this->keyword];
     }
 }
