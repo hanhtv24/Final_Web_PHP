@@ -57,7 +57,7 @@ Open folder `vendor` if it has folder vlucas => OK, else REOPEN PHPSTORM
 
 ## Step 4: Start xampp and create DB 
 - START XAMPP
-- OPEN `http://localhost/phpmyadmin/index.php`
+- OPEN (http://localhost/phpmyadmin/index.php)
 - CREATE DATABASE `mvc_framwork`
 ```bash
    CREATE DATABASE mvc_framwork
