@@ -10,14 +10,13 @@ use \app\core\form\SelectionBoxField;
 
 $this->title = 'Update Student';
 ?>
-<h3>Update Subject</h3>
+<h3>Update Student</h3>
 <?php $form = \app\core\form\Form::begin('', "post") ?>
 <?php echo $form->field($model, 'name')?>
 <?php echo (new TextareaField($model, 'description'))?>
 <input type="hidden" name="edit" value="">
 <input type="hidden" name="id" value="<?php echo ($id != '') ? $id : $model->id ?>">
 <input type="hidden" name="old_avatar" value="<?php echo $model->avatar ?>">
-
 <div>
     <img src="../web/avatar/<?php echo $model->avatar?>" class="img-fluid" alt="Avatar Image" style="width: 300px; height: auto">
 </div>

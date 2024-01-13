@@ -42,7 +42,6 @@ class MainController extends Controller
                 }
 
             }
-            var_dump('here');
             return $this->render('register', ['model' => $item]);
         }
         return $this->render('register', ['model' => $item]);
@@ -51,6 +50,7 @@ class MainController extends Controller
     public function confirm(Request $request, Response $response)
     {
         $item = new $this->classItemName();
+        $nameClass = basename(get_class($item));
         if ($request->isPost()) {
             $item->loadData($request->getBody());
             $edit = $request->getBody()['edit'];
@@ -60,9 +60,9 @@ class MainController extends Controller
                     return $this->render('complete', ['model' => $item]);
                 }
             }
-            $response->redirect('/register'.get_class($this->classItemName));
+            $response->redirect('/register'.$nameClass);
         }
-        $response->redirect('/register'.get_class($this->classItemName));
+        $response->redirect('/register'.$nameClass);
         exit;
     }
 
