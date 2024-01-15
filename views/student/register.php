@@ -6,7 +6,6 @@
 use app\core\form\TextareaField;
 use app\core\View;
 use \app\core\form\SelectionBoxField;
-var_dump($model);
 $this->title = 'Register Student';
 ?>
 <h3>Create new Student</h3>

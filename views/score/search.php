@@ -16,7 +16,7 @@ $this->title = 'SEARCH SCORES';
 <?php echo new SelectionBoxField($model, 'subject_id', Score::selectionValue()['subject_id']) ?>
 <?php echo new SelectionBoxField($model, 'teacher_id', Score::selectionValue()['teacher_id']) ?>
 
-<input id="delete_id" name="delete_id" type="text" class="d-none">
+<input name="item_id" type="text" class="d-none">
     <button type="submit" class="btn btn-primary">Tìm kiếm</button>
 <?php \app\core\form\Form::end() ?>
 
@@ -29,7 +29,7 @@ $this->title = 'SEARCH SCORES';
         <th scope="col">Môn học</th>
         <th scope="col">Giáo viên</th>
         <th scope="col">Điểm</th>
-        <th scope="col" colspan="2">Action</th>
+        <th scope="col" colspan="2" class="text-center">Action</th>
     </tr>
     </thead>
     <tbody>

@@ -16,7 +16,7 @@ use \app\core\Application;
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">Navbar</a>
+        <a class="navbar-brand" href="/">Group 3</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -24,9 +24,6 @@ use \app\core\Application;
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="/">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/contact">Contact</a>
                 </li>
             </ul>
             <?php if (Application::isGuest()): ?>
@@ -40,9 +37,6 @@ use \app\core\Application;
                 </ul>
             <?php else: ?>
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="/profile">Profile</a>
-                    </li>
                     <li class="nav-item">
                         <a class="nav-link active" href="/reset">Reset Password</a>
                     </li>

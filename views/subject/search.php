@@ -12,7 +12,7 @@ $this->title = 'SEARCH SUBJECTS';
 <?php $form = \app\core\form\Form::begin('', "post","searchForm") ?>
 <?php echo new SelectionBoxField($model, 'search_value', \app\models\Subject::selectionValue()['school_year']) ?>
 <?php echo $form->field($model, 'keyword_value') ?>
-<input id="delete_id" name="delete_id" type="text" class="d-none">
+<input name="item_id" type="text" class="d-none">
     <button type="submit" class="btn btn-primary">Tìm kiếm</button>
 <?php \app\core\form\Form::end() ?>
 
@@ -32,7 +32,7 @@ $this->title = 'SEARCH SUBJECTS';
         <tr>
             <th scope="row"><?php echo $index + 1?></th>
             <td class='d-none'><?php echo $item->id ?></td>
-            <td><?php echo $item->name ?></td>
+            <td class="item_name"><?php echo $item->name ?></td>
             <td><?php echo \app\models\Subject::selectionValue()['school_year'][$item->school_year] ?></td>
             <td><?php echo $item->description ?></td>
             <td class='text-end'><button class='btn btn-danger delete_btn'>Xóa</button></td>
@@ -55,7 +55,6 @@ $this->title = 'SEARCH SUBJECTS';
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                Bạn muốn xóa phòng học này?
             </div>
             <div class="modal-footer">
                 <button type="button" id="delete_item" class="btn btn-secondary" data-bs-dismiss="modal">Xóa</button>
@@ -68,9 +67,10 @@ $this->title = 'SEARCH SUBJECTS';
 <script>
     $(document).on('click', '.delete_btn', function() {
         var id = $(this).closest("tr").find(".d-none").text();
-        console.log("ID to be deleted: " + id);
+        var name = $(this).closest("tr").find(".item_name").text();
+        $("#delete").find(".modal-body").text("Bạn chắc chắn muốn môn học " + name);
         $("#delete_popup").click();
-        $("#delete_id").val(id);
+        $("input[name='item_id']").val(id);
     });
 
     $("#delete_item").on("click", () => {

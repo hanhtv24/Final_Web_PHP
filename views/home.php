@@ -14,16 +14,7 @@ $this->title='Home';
     <div>Welcome to Grade Management</div>
     <?php endif; ?>
         <div class="row mt-3">
-            <div class="col-sm-2 m-2">
-                <div class="">
-                    Phòng học
-                </div>
-                <div class="list-group">
-                    <a href="/" class="list-group-item list-group-item-action">Tìm kiếm</a>
-                    <a href="/" class="list-group-item list-group-item-action">Thêm mới</a>
-                </div>
-            </div>
-            <div class="col-sm-2 m-2">
+            <div class="col-sm-3">
                 <div class="">
                     Giáo viên
                 </div>
@@ -32,7 +23,7 @@ $this->title='Home';
                     <a href="/registerTeacher" class="list-group-item list-group-item-action">Thêm mới</a>
                 </div>
             </div>
-            <div class="col-sm-2 m-2">
+            <div class="col-sm-3">
                 <div class="">
                     Môn học
                 </div>
@@ -41,7 +32,7 @@ $this->title='Home';
                     <a href="/registerSubject" class="list-group-item list-group-item-action">Thêm mới</a>
                 </div>
             </div>
-            <div class="col-sm-2 m-2">
+            <div class="col-sm-3">
                 <div class="">
                     Sinh viên
                 </div>
@@ -50,7 +41,7 @@ $this->title='Home';
                     <a href="/registerStudent" class="list-group-item list-group-item-action">Thêm mới</a>
                 </div>
             </div>
-            <div class="col-sm-2 m-2">
+            <div class="col-sm-3">
                 <div class="">
                     Điểm
                 </div>
