@@ -1,0 +1,17 @@
+{
+    "name": "hanhtv/public",
+    "autoload": {
+        "psr-4": {
+            "Hanhtv\\Public\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "hanhtv24",
+            "email": "144075133+hanhtv24@users.noreply.github.com"
+        }
+    ],
+    "require": {
+        "vlucas/phpdotenv": "^5.6"
+    }
+}
