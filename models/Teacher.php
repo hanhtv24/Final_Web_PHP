@@ -8,10 +8,8 @@ use app\core\db\DbModel;
 class Teacher extends DbModel
 {
     public string $name = '';
-
     public string $specialized = '';
     public string $degree = '';
-
     public string $description = '';
     public string $avatar = '';
 

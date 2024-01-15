@@ -64,6 +64,7 @@ class Application
             return false;
         }
     }
+
     public static function isGuest()
     {
         return !self::$app->admin;

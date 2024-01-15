@@ -91,6 +91,11 @@ abstract class Model
         $this->errors[$attribute][] = $message;
     }
 
+    public function removeError(string $attribute)
+    {
+        unset($this->errors[$attribute]);
+    }
+
     public function errorMessages(): array
     {
         return [

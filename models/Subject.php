@@ -45,6 +45,7 @@ class Subject extends DbModel
             'avatar' => 'Avatar'
         ];
     }
+
     public function primaryKey(): string
     {
         return 'id';

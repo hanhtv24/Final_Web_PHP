@@ -1,5 +1,5 @@
 <?php
-class m0003_add_full_db
+class m0001initial_db
 {
     public function up()
     {
@@ -66,13 +66,24 @@ class m0003_add_full_db
             ) ENGINE=InnoDB;
             
             -- Thêm khóa ngoại cho bảng scores
+
+            -- Khóa ngoại liên kết với bảng students
             ALTER TABLE scores
-            ADD CONSTRAINT FK_student -- Khóa ngoại liên kết với bảng students
-            FOREIGN KEY (student_id) REFERENCES students(id),
-            ADD CONSTRAINT FK_teacher -- Khóa ngoại liên kết với bảng teachers
-            FOREIGN KEY (teacher_id) REFERENCES teachers(id),
-            ADD CONSTRAINT FK_subject -- Khóa ngoại liên kết với bảng subjects
-            FOREIGN KEY (subject_id) REFERENCES subjects(id);
+            ADD CONSTRAINT FK_student
+            FOREIGN KEY (student_id) REFERENCES students(id)
+            ON DELETE CASCADE;
+            
+            -- Khóa ngoại liên kết với bảng teachers
+            ALTER TABLE scores
+            ADD CONSTRAINT FK_teacher
+            FOREIGN KEY (teacher_id) REFERENCES teachers(id)
+            ON DELETE CASCADE;
+            
+            -- Khóa ngoại liên kết với bảng subjects
+            ALTER TABLE scores
+            ADD CONSTRAINT FK_subject
+            FOREIGN KEY (subject_id) REFERENCES subjects(id)
+            ON DELETE CASCADE;
            ";
         $db->pdo->exec($SQL);
     }
