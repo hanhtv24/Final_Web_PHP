@@ -21,6 +21,7 @@ abstract class DbModel extends Model
         return static::class;
     }
 
+    // INSERT
     public function save()
     {
         $tableName = $this->tableName();
@@ -38,24 +39,22 @@ abstract class DbModel extends Model
     public function update(array $attributes, array $where)
     {
         $tableName = $this->tableName();
-        $attributesWhere = array_keys($where);
-        $params = array_map(fn($attr) => "$attr = :$attr", $attributes);
-        $sql = implode('AND ', array_map(fn($attr) => "$attr = '%$attr'", $attributesWhere));
-        $sqlFinal = "UPDATE $tableName SET ".implode(', ', $params)." WHERE $sql";
-        foreach ($attributes as $attribute) {
-            if ($this->{$attribute} === '') {
-                $sqlFinal = str_replace(":$attribute", "''", $sqlFinal);
-            } else {
-                $sqlFinal = str_replace(":$attribute", '\''.$this->{$attribute}.'\'', $sqlFinal);
-            }
+        $updateColumns = array_map(fn($attr) => "$attr = :$attr", ($attributes));
+        $whereColumns = array_map(fn($key) => "$key = :where_$key", array_keys($where));
+        $sql = "UPDATE $tableName SET " . implode(', ', $updateColumns) . " WHERE " . implode(' AND ', $whereColumns);
+        $statement = self::prepare($sql);
+        // Bind values for update columns
+        foreach ($attributes as $attribute => $value) {
+            $statement->bindValue(":$value", $this->{$value});
         }
-        foreach ($where as $key => $item) {
-            $sqlFinal = str_replace("%$key", "$item", $sqlFinal);
+        // Bind values for WHERE clause
+        foreach ($where as $key => $value) {
+            $statement->bindValue(":where_$key", $value);
         }
-        $statement = self::prepare($sqlFinal);
         $statement->execute();
         return true;
     }
+
 
     public static function prepare($sql)
     {
@@ -96,7 +95,6 @@ abstract class DbModel extends Model
     {
         $tableName = static::tableName();
         $sql = "SELECT * FROM $tableName WHERE ";
-
         $params = [];
         foreach ($searchKey as $attribute => $column) {
             if ($searchValue[$attribute] !== '' && !is_array($searchValue[$attribute])) {
@@ -135,7 +133,7 @@ abstract class DbModel extends Model
         if (!$params) {
             $sql = "SELECT * FROM $tableName";
         }
-
+        $sql .= " ORDER BY id DESC";
         $statement = self::prepare($sql);
         $statement->execute($params);
         return $statement->fetchAll(PDO::FETCH_CLASS, static::getClassSearch());
